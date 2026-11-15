@@ -1,2 +1,6 @@
-abhinavaditya811
-mihikamax@gmail.com
+# Everything in the repo is owned by both of you
+*                       @abhinavaditya811 @MihikaNigam
+
+# Protect the guardrails themselves
+/.github/CODEOWNERS     @abhinavaditya811 @MihikaNigam
+/.github/workflows/     @abhinavaditya811 @MihikaNigam
