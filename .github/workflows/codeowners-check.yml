@@ -1,0 +1,27 @@
+# .github/workflows/codeowners-check.yml
+name: Validate CODEOWNERS
+
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"   # weekly, catches renames/deletions between PRs
+
+permissions:
+  contents: read
+
+jobs:
+  codeowners:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for CODEOWNERS errors
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          errors=$(gh api "repos/${{ github.repository }}/codeowners/errors" --jq '.errors')
+          if [ "$errors" != "[]" ]; then
+            echo "CODEOWNERS has invalid entries:"
+            echo "$errors" | jq .
+            exit 1
+          fi
+          echo "CODEOWNERS is valid."
